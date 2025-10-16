@@ -1,2 +1,1 @@
-# Lab2
-Fresh repository with main branch.
+# Team 12 Project
