@@ -1,5 +1,5 @@
 import { PostcardModel } from "./PostcardModel";
-import { PostcardView } from "./Postcardview";
+import { PostcardView } from "./PostcardView";
 
 export class PostcardController {
   private model: PostcardModel;
