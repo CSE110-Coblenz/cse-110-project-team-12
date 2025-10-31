@@ -1,7 +1,7 @@
 import Konva from "konva";
 import { Location } from "./Postcard/Location";
 import { PostcardModel } from "./Postcard/PostcardModel";
-import { PostcardView } from "./Postcard/Postcardview";
+import { PostcardView } from "./Postcard/PostcardView";
 import { PostcardController } from "./Postcard/PostcardController";
 
 // Create stage
