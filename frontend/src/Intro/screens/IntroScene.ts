@@ -12,6 +12,7 @@ export class IntroScene{
     private state: number;
     private meimeiRed: Konva.Image | null = null;
     private meimeiBlue: Konva.Image | null = null;
+    private meimeiYellow: Konva.Image | null = null;
     private background: Konva.Rect;
     
 	//constructor(onStartClick: () => void) {
@@ -22,7 +23,7 @@ export class IntroScene{
         this.layer = layer;
         this.stage = stage;
         this.state = 0;
-        Konva.Image.fromURL("./src/Data/meimeiRed.jpg", (image) => {
+        Konva.Image.fromURL("./src/Intro/Data/meimeiRed.jpg", (image) => {
             image.width(300);
             image.height(300);
 			image.x(this.stage.width() / 2 + 400);
@@ -31,7 +32,7 @@ export class IntroScene{
 			image.offsetY( image.height() / 2);
 			this.meimeiRed = image;
 		}, (error) =>{console.log(error)});
-         Konva.Image.fromURL("./src/Data/meimeiBlue.jpg", (image) => {
+        Konva.Image.fromURL("./src/Intro/Data/meimeiBlue.jpg", (image) => {
             image.width(300);
             image.height(300);
 			image.x(this.stage.width() / 2 - 400);
@@ -40,25 +41,38 @@ export class IntroScene{
 			image.offsetY( image.height() / 2);
 			this.meimeiBlue = image;
 		}, (error) =>{console.log(error)});
+        Konva.Image.fromURL("./src/Intro/Data/meimeiYellow.jpg", (image) => {
+            image.width(300);
+            image.height(300);
+			image.x(this.stage.width() / 2);
+			image.y(400);
+			image.offsetX( image.width() / 2);
+			image.offsetY( image.height() / 2);
+			this.meimeiYellow = image;
+            this.group.add(this.meimeiYellow);
+		}, (error) =>{console.log(error)});
+
         this.background = new Konva.Rect({
             x:0,
             y:0,
             width: stage.width(),
             height: stage.height(),
-            fill: "green"
+            fill: "rgb(235, 153, 46)"
         });
         this.group.add(this.background);
 
 
         this.rules = this.getData(ruleData);
         this.story = this.getData(storyData);
-       
+
+        //this.displayPage(["Mei Mei's Adventure"], "START GAME", this.meimeiYellow, "green");
+        
 		// Title text
         const title = new Konva.Text({
 			x: this.stage.width() / 2,
 			y: 150,
-			text: "Group 12 Game",
-			fontSize: 48,
+			text: "Mei Mei's Adventure",
+			fontSize: 70,
 			fontFamily: "Arial",
 			fill: "yellow",
 			stroke: "orange",
@@ -72,7 +86,7 @@ export class IntroScene{
 		const startButtonGroup = new Konva.Group();
 		const startButton = new Konva.Rect({
 			x: this.stage.width() / 2 - 100,
-			y: 300,
+			y: 600,
 			width: 200,
 			height: 60,
 			fill: "green",
@@ -81,9 +95,9 @@ export class IntroScene{
 			strokeWidth: 3,
 		});
 		const startText = new Konva.Text({
-			x: this.stage.width() / 2,
-			y: 315,
-			text: "START GAME",
+			x: this.stage.width() / 2, 
+			y: 615,
+			text: "START INTRO",
 			fontSize: 24,
 			fontFamily: "Arial",
 			fill: "white",
@@ -94,6 +108,8 @@ export class IntroScene{
 		startButtonGroup.add(startText);
 		startButtonGroup.on("click", this.handleNextClick);
 		this.group.add(startButtonGroup);
+        //this.displayPage(["Mei Mei's Adventure"], "START GAME", this.meimeiYellow, "green");
+
 	}
     private handleNextClick = () => {
         let red: string = 'rgb(198,56,56)';
@@ -111,16 +127,15 @@ export class IntroScene{
         this.stage.add(this.layer);
     }
 
-    
     getData(data: Object):string[]{
         const jsonString = JSON.stringify(data);
         const parsedData: any = JSON.parse(jsonString);
         const stringArray: string[] = Object.values(parsedData).map(String);
         return stringArray;
     }
-
     
     displayPage(text:string[], buttonText:string, img:Konva.Image|null, bgColor:string):void{
+        console.log("displayPAge");
         this.background.fill(bgColor);
         this.group.add(this.background);
         for(let i = 0; i < text.length; i++){
@@ -128,10 +143,10 @@ export class IntroScene{
                 x: this.stage.width() / 2,
                 y: 150 + i * 100,
                 text: text[i],
-                fontSize: 20,
+                fontSize: 25,
                 fontFamily: "Arial",
-                fill: "black",
-                stroke: "black",
+                fill: "orange",
+                //stroke: "orange",
                 strokeWidth: 2,
                 align: "center",
             });
@@ -161,7 +176,7 @@ export class IntroScene{
 			text: buttonText,
 			fontSize: 24,
 			fontFamily: "Arial",
-			fill: "black",
+			fill: "white",
 			align: "center",
 		});
 		nextText.offsetX(nextText.width() / 2);

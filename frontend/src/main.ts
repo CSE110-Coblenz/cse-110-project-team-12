@@ -1,5 +1,6 @@
 import Konva from "konva";
-import {IntroScene} from "./screens/IntroScene.ts";
+import {IntroScene} from "./Intro/screens/IntroScene.ts";
+import { IntroScreenController } from "./Intro/screens/IntroScreenController.ts";
 
 // first we need to create a stage
 const stage = new Konva.Stage({
@@ -22,10 +23,12 @@ const circle = new Konva.Circle({
   strokeWidth: 4,
 });
 
-let introScene :IntroScene;
-introScene = new IntroScene(layer, stage);
+// let introScene :IntroScene;
+// introScene = new IntroScene(layer, stage);
+let introScreenController = new IntroScreenController(layer, stage);
+introScreenController.getView().show();
 
-layer.add(introScene.getGroup());
+layer.add(introScreenController.getView().getGroup());
 // add the shape to the layer
 //layer.add(circle);
 
