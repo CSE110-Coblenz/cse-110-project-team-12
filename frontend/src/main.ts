@@ -1,4 +1,6 @@
-import { initMapView } from "./MapView/MapView";
+import Konva from "konva";
+import {IntroScene} from "./Intro/screens/IntroScene.ts";
+import { IntroScreenController } from "./Intro/screens/IntroScreenController.ts";
 
 // first we need to create a stage
 const stage = new Konva.Stage({
@@ -21,8 +23,14 @@ const circle = new Konva.Circle({
   strokeWidth: 4,
 });
 
+// let introScene :IntroScene;
+// introScene = new IntroScene(layer, stage);
+let introScreenController = new IntroScreenController(layer, stage);
+introScreenController.getView().show();
+
+layer.add(introScreenController.getView().getGroup());
 // add the shape to the layer
-layer.add(circle);
+//layer.add(circle);
 
 // add the layer to the stage
 stage.add(layer);

@@ -10,5 +10,6 @@
     "noEmit": true, // Or "emitDeclarationOnly": true
      "resolveJsonModule": true
   },
-  "include": ["src", "custom.d.ts"]
+  "include": ["src", "custom.d.ts", "test"],
+  "exclude": ["tests"]
 }
