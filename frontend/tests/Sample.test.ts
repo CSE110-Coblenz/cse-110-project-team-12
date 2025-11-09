@@ -1,7 +1,6 @@
-// test("Initial test", () => {
-//    expect(3).toEqual(3);
-// });
-
+/*
+Source: https://medium.com/@dimi_2011/tdd-unit-testing-typescript-project-with-jest-2557e8b84414
+*/
 import { IntroScreenModel } from "../src/Intro/screens/IntroScreenModel.ts";
 
 describe("Sample test suite", () => {
