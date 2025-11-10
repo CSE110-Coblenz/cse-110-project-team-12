@@ -10,4 +10,5 @@ jobs:
           node-version: '20'
       - run: npm ci
       - run: cd frontend
+      - run: pwd
       - run: npm test
