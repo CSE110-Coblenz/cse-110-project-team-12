@@ -28,6 +28,59 @@ export class MapView {
   // Initialize the map view
   async init(): Promise<void> {
     await this.loadWorldMap();
+    // Show target location marker for debugging
+    this.showTargetLocation();
+  }
+
+  // Show target location marker (for debugging - shows where the game thinks the location is)
+  showTargetLocation(): void {
+    const target = this.model.correctLocation;
+    const tolerance = this.model.clickTolerance;
+    
+    // Draw a circle showing the target area
+    const targetCircle = new Konva.Circle({
+      x: target.x,
+      y: target.y,
+      radius: tolerance,
+      stroke: "red",
+      strokeWidth: 2,
+      dash: [5, 5],
+      name: "targetLocation",
+    });
+
+    // Draw center point
+    const centerPoint = new Konva.Circle({
+      x: target.x,
+      y: target.y,
+      radius: 5,
+      fill: "red",
+      name: "targetLocation",
+    });
+
+    // Add label
+    const label = new Konva.Text({
+      x: target.x + tolerance + 5,
+      y: target.y - 10,
+      text: `${this.model.city}\n(${target.x}, ${target.y})`,
+      fontSize: 12,
+      fontFamily: "Arial",
+      fill: "red",
+      name: "targetLocation",
+    });
+
+    this.layer.add(targetCircle);
+    this.layer.add(centerPoint);
+    this.layer.add(label);
+    this.layer.draw();
+  }
+
+  // Hide target location marker
+  hideTargetLocation(): void {
+    const markers = this.layer.find((node: Konva.Node) => 
+      node.name() === "targetLocation"
+    );
+    markers.forEach((node) => node.destroy());
+    this.layer.draw();
   }
 
   // Get the stage for event handling
@@ -68,9 +121,16 @@ export class MapView {
     });
   }
 
-  // Render days traveled text
+  // Render days traveled text and current hint
   private renderDaysTraveledText(): void {
-    const text = new Konva.Text({
+    // Remove existing text if it exists
+    const existingText = this.layer.find((node: Konva.Node) => 
+      node.name() === "daysTraveledText" || node.name() === "hintText"
+    );
+    existingText.forEach((node) => node.destroy());
+
+    // Render days traveled
+    const daysText = new Konva.Text({
       x: this.stage.width() - 250,
       y: 20,
       text: `Days Traveled: ${this.model.daysTraveled}`,
@@ -80,8 +140,30 @@ export class MapView {
       name: "daysTraveledText",
     });
 
-    this.layer.add(text);
-    text.moveToTop();
+    this.layer.add(daysText);
+    daysText.moveToTop();
+
+    // Render current hint
+    const hintText = new Konva.Text({
+      x: 20,
+      y: 20,
+      text: `Hint: ${this.model.hint}`,
+      fontSize: 16,
+      fontFamily: "Arial",
+      fill: "black",
+      width: this.stage.width() - 300,
+      wrap: "word",
+      name: "hintText",
+    });
+
+    this.layer.add(hintText);
+    hintText.moveToTop();
+  }
+
+  // Update the hint text (call this when location changes)
+  updateHint(): void {
+    this.renderDaysTraveledText();
+    this.layer.draw();
   }
 
   // Create a star marker
@@ -216,6 +298,7 @@ export class MapView {
       fill: "red",
       cornerRadius: 5,
       name: "continueButton",
+      listening: true, // Enable click events
     });
 
     const buttonText = new Konva.Text({
@@ -228,10 +311,23 @@ export class MapView {
       align: "center",
       verticalAlign: "middle",
       name: "continueButton",
+      listening: false, // Text doesn't need to listen, parent does
     });
 
     buttonText.offsetX(buttonText.width() / 2);
     buttonText.offsetY(buttonText.height() / 2);
+    
+    // Add hover effect
+    buttonBackground.on("mouseenter", () => {
+      document.body.style.cursor = "pointer";
+      buttonBackground.fill("#cc0000");
+      this.layer.draw();
+    });
+    buttonBackground.on("mouseleave", () => {
+      document.body.style.cursor = "default";
+      buttonBackground.fill("red");
+      this.layer.draw();
+    });
 
     return { background, text, buttonBackground, buttonText };
   }
@@ -324,6 +420,7 @@ export class MapView {
       fill: "red",
       cornerRadius: 5,
       name: "travelPathContinueButton",
+      listening: true, // Enable click events
     });
 
     const buttonText = new Konva.Text({
@@ -336,10 +433,23 @@ export class MapView {
       align: "center",
       verticalAlign: "middle",
       name: "travelPathContinueButton",
+      listening: false, // Text doesn't need to listen
     });
 
     buttonText.offsetX(buttonText.width() / 2);
     buttonText.offsetY(buttonText.height() / 2);
+    
+    // Add hover effect
+    buttonBackground.on("mouseenter", () => {
+      document.body.style.cursor = "pointer";
+      buttonBackground.fill("#cc0000");
+      this.layer.draw();
+    });
+    buttonBackground.on("mouseleave", () => {
+      document.body.style.cursor = "default";
+      buttonBackground.fill("red");
+      this.layer.draw();
+    });
 
     this.layer.add(buttonBackground);
     this.layer.add(buttonText);

@@ -1,5 +1,7 @@
 // MapModel.ts - Handles data and business logic
 
+import { getLocationsForMap } from "../view/locationData";
+
 // Interface for clicked locations
 export interface ClickedLocation {
   x: number;
@@ -17,12 +19,17 @@ export interface Location {
 export class MapModel {
   // Game state
   private _daysTraveled: number = 0;
-  private _hint: string = "example hint";
-  private _city: string = "Example City";
-  private _country: string = "Example Country";
+  private _hint: string = "";
+  private _city: string = "";
+  private _country: string = "";
+
+  // Current location tracking
+  private _currentLocationIndex: number = 0;
+  private _currentLocationId: string | null = null;
+  private _mapType: "worldMap" | "continentMap" = "worldMap";
 
   // Target location and tolerance
-  private _correctLocation: Location = { x: 300, y: 400 };
+  private _correctLocation: Location = { x: 0, y: 0 };
   private _clickTolerance: number = 30;
 
   // Clicked locations history
@@ -31,6 +38,11 @@ export class MapModel {
   // UI state flags
   private _messageBoxVisible: boolean = false;
   private _showingTravelPath: boolean = false;
+
+  constructor() {
+    // Initialize with the first location
+    this.initializeLocation(0);
+  }
 
   // Getters
   get daysTraveled(): number {
@@ -69,6 +81,18 @@ export class MapModel {
     return this._showingTravelPath;
   }
 
+  get currentLocationIndex(): number {
+    return this._currentLocationIndex;
+  }
+
+  get currentLocationId(): string | null {
+    return this._currentLocationId;
+  }
+
+  get mapType(): "worldMap" | "continentMap" {
+    return this._mapType;
+  }
+
   // Setters
   set messageBoxVisible(value: boolean) {
     this._messageBoxVisible = value;
@@ -76,6 +100,67 @@ export class MapModel {
 
   set showingTravelPath(value: boolean) {
     this._showingTravelPath = value;
+  }
+
+  set mapType(value: "worldMap" | "continentMap") {
+    this._mapType = value;
+    // Reinitialize current location with new map type
+    this.initializeLocation(this._currentLocationIndex);
+  }
+
+  // Initialize or update the current location
+  private initializeLocation(index: number): void {
+    const locations = getLocationsForMap(this._mapType);
+    
+    if (locations.length === 0) {
+      console.error("No locations available");
+      return;
+    }
+
+    // Clamp index to valid range
+    if (index < 0) index = 0;
+    if (index >= locations.length) index = locations.length - 1;
+
+    const location = locations[index];
+    this._currentLocationIndex = index;
+    this._currentLocationId = location.id;
+    
+    // Update game state with real location data
+    this._hint = location.hint;
+    this._city = location.name;
+    this._country = location.continent;
+    this._correctLocation = { x: location.x, y: location.y };
+    this._clickTolerance = location.tolerance;
+  }
+
+  // Advance to the next location (called after correct guess)
+  advanceToNextLocation(): boolean {
+    const locations = getLocationsForMap(this._mapType);
+    
+    if (this._currentLocationIndex + 1 >= locations.length) {
+      // No more locations - game complete!
+      return false;
+    }
+
+    this._currentLocationIndex++;
+    this.initializeLocation(this._currentLocationIndex);
+    return true;
+  }
+
+  // Get the current location data
+  getCurrentLocationData(): {
+    id: string;
+    name: string;
+    continent: string;
+    hint: string;
+    x: number;
+    y: number;
+    tolerance: number;
+  } | null {
+    if (!this._currentLocationId) return null;
+    
+    const locations = getLocationsForMap(this._mapType);
+    return locations.find(loc => loc.id === this._currentLocationId) || null;
   }
 
   // Business logic methods

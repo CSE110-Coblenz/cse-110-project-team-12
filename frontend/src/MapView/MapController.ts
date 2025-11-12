@@ -47,12 +47,27 @@ export class MapController {
     let shape: Konva.Node | null = e.target as Konva.Node;
     while (shape) {
       if (shape.name() === "travelPathContinueButton") {
-        // Do nothing for now as requested
+        // Hide travel path and return to map
+        this.hideTravelPath();
         return;
       }
       shape = shape.getParent();
     }
     // Ignore all other clicks when travel path is visible
+  }
+
+  // Hide travel path and return to map view
+  private hideTravelPath(): void {
+    this.model.showingTravelPath = false;
+    // Remove travel path elements
+    const travelPathElements = this.view.getLayer().find((node: Konva.Node) => 
+      node.name() === "travelPath" || node.name() === "travelPathContinueButton"
+    );
+    travelPathElements.forEach((node) => node.destroy());
+    
+    // Show target location marker for the new location
+    this.view.showTargetLocation();
+    this.view.draw();
   }
 
   // Handle clicks when message box is visible
@@ -73,6 +88,20 @@ export class MapController {
   private handleMapClick(clickX: number, clickY: number): void {
     // Check if click is correct
     const wasCorrect = this.model.isClickCorrect(clickX, clickY);
+    
+    // Debug: Log click coordinates and target location
+    const target = this.model.correctLocation;
+    const distance = Math.sqrt(
+      Math.pow(clickX - target.x, 2) + Math.pow(clickY - target.y, 2)
+    );
+    console.log("=== CLICK DEBUG ===");
+    console.log("Click coordinates:", clickX, clickY);
+    console.log("Target location:", target.x, target.y);
+    console.log("Distance:", distance.toFixed(2), "Tolerance:", this.model.clickTolerance);
+    console.log("Was correct:", wasCorrect);
+    console.log("Current location:", this.model.city);
+    console.log("\n💡 To update coordinates in JSON:");
+    console.log(`"worldMap": { "x": ${clickX}, "y": ${clickY}, "tolerance": 30 }`);
 
     // Store the clicked location in model
     this.model.addClickedLocation({
@@ -120,9 +149,28 @@ export class MapController {
     this.view.removeMessageBoxes();
     this.model.messageBoxVisible = false;
 
-    // If it was a correct guess and we have locations, show travel path
-    if (wasCorrectGuess && this.model.hasClickedLocations()) {
-      this.showTravelPath();
+    // If it was a correct guess, advance to next location
+    if (wasCorrectGuess) {
+      const hasMoreLocations = this.model.advanceToNextLocation();
+      
+      // Update the hint display with the new location
+      this.view.updateHint();
+      
+      // Update target location marker for the new location
+      this.view.hideTargetLocation();
+      this.view.showTargetLocation();
+      
+      // If we have clicked locations, show travel path
+      if (this.model.hasClickedLocations()) {
+        this.showTravelPath();
+      } else if (hasMoreLocations) {
+        // Update the view to show the new hint/location
+        this.view.draw();
+      } else {
+        // Game complete!
+        console.log("Game complete! All locations found!");
+        this.view.draw();
+      }
     } else {
       this.view.draw();
     }
