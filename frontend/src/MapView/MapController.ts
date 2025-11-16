@@ -8,11 +8,15 @@ import { MapView } from "./MapView";
 export class MapController {
   private model: MapModel;
   private view: MapView;
+  private correctBuzzer: HTMLAudioElement;
+  private wrongBuzzer: HTMLAudioElement;
 
   constructor(model: MapModel, view: MapView) {
     this.model = model;
     this.view = view;
     this.initEventHandlers();
+    this.correctBuzzer = new Audio("/correct_buzzer.mp3");
+    this.wrongBuzzer = new Audio("/wrong_buzzer.mp3");
   }
 
   // Initialize all event handlers
@@ -64,11 +68,64 @@ export class MapController {
         this.dismissMessageBox(wasCorrectGuess);
         return;
       }
+      if (shape.name() === "nAmericaMap") {
+        // Change map
+        return;
+      }
+      else if (shape.name() === "sAmericaMap") {
+        // Change map
+        return;
+      }
+      else if (shape.name() === "africaMap") {
+        // Change map
+        return;
+      }
+      else if (shape.name() === "asiaMap") {
+        // Change map
+        return;
+      }
+      else if(shape.name() === "europeMap"){
+        return;
+      }
+      else if(shape.name() === "australiaMap"){
+      
+      }  
       shape = shape.getParent();
+      
     }
     // Ignore all other clicks when message box is visible
   }
-
+  
+  // map clicks, not finished
+  /*
+  private handleMapButtonClick(e: Konva.KonvaEventObject<MouseEvent>): void {
+    let shape: Konva.Node | null = e.target as Konva.Node;
+    while (shape) {
+      if (shape.name() === "nAmericaMap") {
+        // Change map
+        return;
+      }
+      else if (shape.name() === "sAmericaMap") {
+        // Change map
+        return;
+      }
+      else if (shape.name() === "africaMap") {
+        // Change map
+        return;
+      }
+      else if (shape.name() === "asiaMap") {
+        // Change map
+        return;
+      }
+      else if(shape.name() === "europeMap"){
+        return;
+      }
+      shape = shape.getParent();
+    }
+    // Ignore all other clicks when travel path is visible
+  }
+  */
+ 
   // Handle clicks on the map
   private handleMapClick(clickX: number, clickY: number): void {
     // Check if click is correct
@@ -93,8 +150,12 @@ export class MapController {
 
     // Show appropriate message
     if (wasCorrect) {
+      this.correctBuzzer.play();
+		  this.correctBuzzer.currentTime = 0;
       this.showSuccessMessage();
     } else {
+      this.wrongBuzzer.play();
+		  this.wrongBuzzer.currentTime = 0;
       this.showIncorrectMessage();
     }
 

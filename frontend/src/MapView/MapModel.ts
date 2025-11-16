@@ -16,11 +16,11 @@ export interface Location {
 // Model class to manage application state
 export class MapModel {
   // Game state
-  private _daysTraveled: number = 0;
+  public _daysTraveled: number = 0;
   private _hint: string = "example hint";
   private _city: string = "Example City";
   private _country: string = "Example Country";
-
+  
   // Target location and tolerance
   private _correctLocation: Location = { x: 300, y: 400 };
   private _clickTolerance: number = 30;
@@ -36,7 +36,7 @@ export class MapModel {
   get daysTraveled(): number {
     return this._daysTraveled;
   }
-
+  
   get hint(): string {
     return this._hint;
   }
