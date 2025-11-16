@@ -1,9 +1,13 @@
+
 // src/main.ts (controller)
 import Konva from "konva"; // ← you need this
 import { gameState } from "./model/gameState";
 import { isCorrectSelection } from "./map/selection";
 import { createMapView } from "./view/mapView";
 import { MOCK_LOCATIONS } from "./data/mocklocations";
+import {IntroScene} from "./Intro/screens/IntroScene.ts";
+import { IntroScreenController } from "./Intro/screens/IntroScreenController.ts";
+
 
 const app = document.getElementById("app")!;
 const view = createMapView(app);
@@ -25,23 +29,32 @@ function drawMarkers() {
   // clear existing markers if we redraw
   view.layer.find(".marker-dot").forEach((n) => n.destroy());
 
-  for (const loc of MOCK_LOCATIONS) {
-    const dot = new Konva.Circle({
-      name: "marker-dot",
-      x: loc.coord.x,
-      y: loc.coord.y,
-      radius: 8, // bigger so you can see it
-      fill: "#00c853", // bright green
-      stroke: "#003300",
-      strokeWidth: 2,
-      listening: true, // optional; lets you attach per-dot handlers later
-    });
-    view.layer.add(dot);
-    dot.moveToTop(); // make sure it’s above the background
-  }
-  view.layer.draw(); // force immediate paint
-}
-drawMarkers();
+
+//   for (const loc of MOCK_LOCATIONS) {
+//     const dot = new Konva.Circle({
+//       name: "marker-dot",
+//       x: loc.coord.x,
+//       y: loc.coord.y,
+//       radius: 8, // bigger so you can see it
+//       fill: "#00c853", // bright green
+//       stroke: "#003300",
+//       strokeWidth: 2,
+//       listening: true, // optional; lets you attach per-dot handlers later
+//     });
+//     view.layer.add(dot);
+//     dot.moveToTop(); // make sure it’s above the background
+//   }
+//   view.layer.draw(); // force immediate paint
+// }
+// drawMarkers();
+// let introScene :IntroScene;
+// introScene = new IntroScene(layer, stage);
+let introScreenController = new IntroScreenController(layer, stage);
+introScreenController.getView().show();
+
+layer.add(introScreenController.getView().getGroup());
+// add the shape to the layer
+//layer.add(circle);
 
 // Input → decision → feedback
 view.stage.on("click", () => {
