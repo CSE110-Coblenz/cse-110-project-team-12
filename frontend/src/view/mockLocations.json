@@ -6,8 +6,8 @@
       "continent": "North America",
       "hint": "I stood at the edge of the falls and felt the mist hit my face while the roar of the water drowned out everything else. A rainbow appeared in the spray and for a second it felt unreal.",
       "worldMap": {
-        "x": 557,
-        "y": 331,
+        "x": 575,
+        "y": 540,
         "tolerance": 30
       },
       "continentMap": {
@@ -22,8 +22,8 @@
       "continent": "North America",
       "hint": "The ferry ride was windy, and everyone crowded the deck to get a closer look. Seeing her up close made me think about all the people who once arrived here for the first time.",
       "worldMap": {
-        "x": 220,
-        "y": 190,
+        "x": 620,
+        "y": 560,
         "tolerance": 30
       },
       "continentMap": {
@@ -38,8 +38,8 @@
       "continent": "North America",
       "hint": "Looking out over the canyon, the colors didn't even seem real. The wind was warm and the river far below looked like a silver thread cutting through time.",
       "worldMap": {
-        "x": 150,
-        "y": 200,
+        "x": 400,
+        "y": 600,
         "tolerance": 30
       },
       "continentMap": {
@@ -54,8 +54,8 @@
       "continent": "North America",
       "hint": "Fog covered the city when I got there, and the bridge seemed to disappear into it. When the sun broke through, the towers looked like they were floating above the bay.",
       "worldMap": {
-        "x": 100,
-        "y": 200,
+        "x": 345,
+        "y": 570,
         "tolerance": 30
       },
       "continentMap": {
@@ -70,8 +70,8 @@
       "continent": "North America",
       "hint": "The hike up was steep and dusty, but the view at the top made it worth it. The city spread out below, full of noise and lights that never seem to stop.",
       "worldMap": {
-        "x": 110,
-        "y": 210,
+        "x": 360,
+        "y": 620,
         "tolerance": 30
       },
       "continentMap": {
@@ -86,8 +86,8 @@
       "continent": "North America",
       "hint": "The elevator shot up so fast my stomach flipped. From the top, the whole city looked tiny and the mountains in the distance seemed to touch the clouds.",
       "worldMap": {
-        "x": 120,
-        "y": 150,
+        "x": 365,
+        "y": 525,
         "tolerance": 30
       },
       "continentMap": {
@@ -102,8 +102,8 @@
       "continent": "North America",
       "hint": "The big silver bean reflected everything around it like a dream. People were laughing, taking pictures, and trying to find themselves in the mirror.",
       "worldMap": {
-        "x": 200,
-        "y": 200,
+        "x": 530,
+        "y": 540,
         "tolerance": 30
       },
       "continentMap": {
@@ -118,8 +118,8 @@
       "continent": "North America",
       "hint": "Standing behind the black fence, I watched tourists take photos and guards watch quietly. It's strange seeing a building that holds so much history just sitting there in the middle of a busy city.",
       "worldMap": {
-        "x": 230,
-        "y": 200,
+        "x": 600,
+        "y": 580,
         "tolerance": 30
       },
       "continentMap": {
@@ -134,8 +134,8 @@
       "continent": "South America",
       "hint": "I took a little train up a steep green mountain today, and at the top stood a towering figure with open arms, as if blessing the whole city below. From up there, I could see golden beaches, samba music in the streets, and people dancing with joy.",
       "worldMap": {
-        "x": 280,
-        "y": 350,
+        "x": 700,
+        "y": 800,
         "tolerance": 30
       },
       "continentMap": {
@@ -150,8 +150,8 @@
       "continent": "South America",
       "hint": "I bundled up in my warmest coat to see an enormous wall of ice stretching across a turquoise lake. Every so often, it cracks and roars, sending chunks tumbling into the water.",
       "worldMap": {
-        "x": 240,
-        "y": 420,
+        "x": 520,
+        "y": 920,
         "tolerance": 30
       },
       "continentMap": {
@@ -166,8 +166,8 @@
       "continent": "South America",
       "hint": "I'm on a tiny island in the middle of the ocean, surrounded by hundreds of giant stone faces staring toward the sea. No one's quite sure who carved them, but they seem a little lonely.",
       "worldMap": {
-        "x": 100,
-        "y": 380,
+        "x": 280,
+        "y": 800,
         "tolerance": 30
       },
       "continentMap": {
@@ -182,8 +182,8 @@
       "continent": "South America",
       "hint": "What a climb I had today! Stone steps led me high above the clouds to an ancient city nestled between mountains. Llamas wander freely here, and I could almost hear whispers from the past in the mist.",
       "worldMap": {
-        "x": 220,
-        "y": 340,
+        "x": 420,
+        "y": 720,
         "tolerance": 30
       },
       "continentMap": {
@@ -198,8 +198,8 @@
       "continent": "South America",
       "hint": "I spent the morning walking beside giant tortoises and watching birds that inspired the theory of evolution. It feels like stepping into a world before time.",
       "worldMap": {
-        "x": 200,
-        "y": 360,
+        "x": 380,
+        "y": 710,
         "tolerance": 30
       },
       "continentMap": {
@@ -214,8 +214,8 @@
       "continent": "South America",
       "hint": "A waterfall poured straight out of the clouds, taller than any I've ever seen, vanishing into a misty jungle below. No wonder they call it the highest in the world!",
       "worldMap": {
-        "x": 260,
-        "y": 320,
+        "x": 610,
+        "y": 680,
         "tolerance": 30
       },
       "continentMap": {
@@ -230,8 +230,8 @@
       "continent": "Australia",
       "hint": "A very famous performing arts center down under.",
       "worldMap": {
-        "x": 500,
-        "y": 380,
+        "x": 930,
+        "y": 740,
         "tolerance": 30
       },
       "continentMap": {
@@ -246,8 +246,8 @@
       "continent": "Australia",
       "hint": "A \"surfer's paradise\" by the Coral Sea.",
       "worldMap": {
-        "x": 520,
-        "y": 370,
+        "x": 940,
+        "y": 730,
         "tolerance": 30
       },
       "continentMap": {
@@ -262,8 +262,8 @@
       "continent": "Australia",
       "hint": "The ocean from Finding Nemo. (P. Sherman)",
       "worldMap": {
-        "x": 530,
-        "y": 360,
+        "x": 950,
+        "y": 710,
         "tolerance": 30
       },
       "continentMap": {
@@ -278,8 +278,8 @@
       "continent": "Australia",
       "hint": "Australia's easternmost point. (kinda gives away location rip) Where the world's brightest and most powerful lighthouse is located",
       "worldMap": {
-        "x": 540,
-        "y": 365,
+        "x": 935,
+        "y": 735,
         "tolerance": 30
       },
       "continentMap": {
@@ -294,8 +294,8 @@
       "continent": "Australia",
       "hint": "A group of giant limestone figures by the Southern Ocean",
       "worldMap": {
-        "x": 480,
-        "y": 400,
+        "x": 880,
+        "y": 770,
         "tolerance": 30
       },
       "continentMap": {

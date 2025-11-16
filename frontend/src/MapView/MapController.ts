@@ -86,34 +86,38 @@ export class MapController {
 
   // Handle clicks on the map
   private handleMapClick(clickX: number, clickY: number): void {
-    // Check if click is correct
-    const wasCorrect = this.model.isClickCorrect(clickX, clickY);
+    // Convert click coordinates from displayed space to original image space
+    const originalClick = this.view.unscaleCoordinates({ x: clickX, y: clickY });
+    
+    // Check if click is correct (using original image coordinates)
+    const wasCorrect = this.model.isClickCorrect(originalClick.x, originalClick.y);
     
     // Debug: Log click coordinates and target location
     const target = this.model.correctLocation;
     const distance = Math.sqrt(
-      Math.pow(clickX - target.x, 2) + Math.pow(clickY - target.y, 2)
+      Math.pow(originalClick.x - target.x, 2) + Math.pow(originalClick.y - target.y, 2)
     );
     console.log("=== CLICK DEBUG ===");
-    console.log("Click coordinates:", clickX, clickY);
-    console.log("Target location:", target.x, target.y);
+    console.log("Click coordinates (displayed):", clickX, clickY);
+    console.log("Click coordinates (original):", originalClick.x, originalClick.y);
+    console.log("Target location (original):", target.x, target.y);
     console.log("Distance:", distance.toFixed(2), "Tolerance:", this.model.clickTolerance);
     console.log("Was correct:", wasCorrect);
     console.log("Current location:", this.model.city);
     console.log("\n💡 To update coordinates in JSON:");
-    console.log(`"worldMap": { "x": ${clickX}, "y": ${clickY}, "tolerance": 30 }`);
+    console.log(`"worldMap": { "x": ${originalClick.x}, "y": ${originalClick.y}, "tolerance": 30 }`);
 
-    // Store the clicked location in model
+    // Store the clicked location in model (using original coordinates)
     this.model.addClickedLocation({
-      x: clickX,
-      y: clickY,
+      x: originalClick.x,
+      y: originalClick.y,
       wasCorrect: wasCorrect,
     });
 
     // Remove existing markers
     this.view.removeMarkers();
 
-    // Create and display marker
+    // Create and display marker (using displayed coordinates for rendering)
     const marker = wasCorrect
       ? this.view.createStar(clickX, clickY)
       : this.view.createX(clickX, clickY);
