@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "es2020",
+    "module": "commonjs",
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
@@ -9,7 +9,7 @@
     "allowImportingTsExtensions": true,
     "noEmit": true, // Or "emitDeclarationOnly": true
      "resolveJsonModule": true,
-    "skipLibCheck": true
+     "skipLibCheck": true
   },
   "include": ["src", "test"],
   "exclude": ["tests", "src/main.ts", "custom.d.ts"]
