@@ -16,7 +16,7 @@ export interface Location {
 // Model class to manage application state
 export class MapModel {
   // Game state
-  private _daysTraveled: number = 0;
+  public _daysTraveled: number = 0;
   private _hint: string = "example hint";
   private _city: string = "Example City";
   private _country: string = "Example Country";

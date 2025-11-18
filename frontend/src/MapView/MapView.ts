@@ -2,6 +2,13 @@
 
 import Konva from "konva";
 import worldMapImageSrc from "../public/world_map.jpg";
+import nAmericaMapSrc from "../public/namerica_map.jpg";
+import sAmericaMapSrc from "../public/samerica_map.jpg";
+import europeMapSrc from "../public/europe_map.jpg";
+import africaMapSrc from "../public/africa_map.jpg";
+import asiaMapSrc from "../public/asia_map.jpg";
+import australiaMapSrc from "../public/australia_map.jpg";
+
 import { MapModel, Location } from "./MapModel";
 
 // View class to manage Konva rendering
@@ -9,6 +16,7 @@ export class MapView {
   private stage: Konva.Stage;
   private layer: Konva.Layer;
   private model: MapModel;
+  private days: number = 1;
 
   constructor(containerId: string, model: MapModel) {
     this.model = model;
@@ -22,12 +30,222 @@ export class MapView {
 
     // Create layer
     this.layer = new Konva.Layer();
+    this.layer.add(this.addButtons());
     this.stage.add(this.layer);
   }
 
   // Initialize the map view
   async init(): Promise<void> {
-    await this.loadWorldMap();
+    await this.loadWorldMap("worldMap");
+  }
+
+  private addButtons(): Konva.Group{
+    const mapButtonGroup = new Konva.Group();
+
+    // north america button
+      const nAmericaGroup = new Konva.Group();
+      const nAmericaButton = new Konva.Rect({
+        x: 50,
+        y: 10,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const nAmericaText = new Konva.Text({
+        x: 100,
+        y: 25,
+        text: "North America Map",
+        fontSize: 10,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      nAmericaText.offsetX(nAmericaText.width() / 2);
+      nAmericaGroup.add(nAmericaButton);
+      nAmericaGroup.add(nAmericaText);
+      nAmericaGroup.on("click", () => {
+        this.loadWorldMap("nAmericaMap");
+      });
+      mapButtonGroup.add(nAmericaGroup);
+
+      // south america button
+      const sAmericaGroup = new Konva.Group();
+      const sAmericaButton = new Konva.Rect({
+        x: 50,
+        y: 60,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const sAmericaText = new Konva.Text({
+        x: 100,
+        y: 75,
+        text: "South America Map",
+        fontSize: 10,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      sAmericaText.offsetX(sAmericaText.width() / 2);
+      sAmericaGroup.add(sAmericaButton);
+      sAmericaGroup.add(sAmericaText);
+      sAmericaGroup.on("click", () => {
+        this.loadWorldMap("sAmericaMap");
+      });
+      mapButtonGroup.add(sAmericaGroup);
+
+      // europe button
+      const europeGroup = new Konva.Group();
+      const europeButton = new Konva.Rect({
+        x: 50,
+        y: 110,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const europeText = new Konva.Text({
+        x: 100,
+        y: 122,
+        text: "Europe Map",
+        fontSize: 12,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      europeText.offsetX(europeText.width() / 2);
+      europeGroup.add(europeButton);
+      europeGroup.add(europeText);
+      europeGroup.on("click", () => {
+        this.loadWorldMap("europeMap");
+      });
+      mapButtonGroup.add(europeGroup);
+
+      // asia button
+      const asiaGroup = new Konva.Group();
+      const asiaButton = new Konva.Rect({
+        x: 50,
+        y: 160,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const asiaText = new Konva.Text({
+        x: 100,
+        y: 170,
+        text: "Asia Map",
+        fontSize: 14,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      asiaText.offsetX(asiaText.width() / 2);
+      asiaGroup.add(asiaButton);
+      asiaGroup.add(asiaText);
+      asiaGroup.on("click", () => {
+        this.loadWorldMap("asiaMap");
+      });
+      mapButtonGroup.add(asiaGroup);
+
+      // africa button
+      const africaGroup = new Konva.Group();
+      const africaButton = new Konva.Rect({
+        x: 50,
+        y: 210,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const africaText = new Konva.Text({
+        x: 100,
+        y: 220,
+        text: "Africa Map",
+        fontSize: 14,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      africaText.offsetX(africaText.width() / 2);
+      africaGroup.add(africaButton);
+      africaGroup.add(africaText);
+      africaGroup.on("click", () => {
+        this.loadWorldMap("africaMap");
+      });
+      mapButtonGroup.add(africaGroup);
+
+      // australia button
+      const australiaGroup = new Konva.Group();
+      const australiaButton = new Konva.Rect({
+        x: 50,
+        y: 260,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const australiaText = new Konva.Text({
+        x: 100,
+        y: 270,
+        text: "Australia Map",
+        fontSize: 12,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      australiaText.offsetX(australiaText.width() / 2);
+      australiaGroup.add(australiaButton);
+      australiaGroup.add(australiaText);
+      australiaGroup.on("click", () => {
+        this.loadWorldMap("australiaMap");
+      });
+      mapButtonGroup.add(australiaGroup);
+
+      const worldGroup = new Konva.Group();
+      const worldButton = new Konva.Rect({
+        x: 50,
+        y: 310,
+        width: 100,
+        height: 40,
+        fill: "red",
+        cornerRadius: 10,
+        stroke: "black",
+        strokeWidth: 3,
+      });
+      const worldText = new Konva.Text({
+        x: 100,
+        y: 320,
+        text: "World Map",
+        fontSize: 12,
+        fontFamily: "Arial",
+        fill: "white",
+        align: "center",
+      });
+      worldText.offsetX(worldText.width() / 2);
+      worldGroup.add(worldButton);
+      worldGroup.add(worldText);
+      worldGroup.on("click", () => {
+        this.loadWorldMap("worldMap");
+      });
+      mapButtonGroup.add(worldGroup);
+
+      return mapButtonGroup;
+
   }
 
   // Get the stage for event handling
@@ -41,10 +259,31 @@ export class MapView {
   }
 
   // Load and display world map
-  private loadWorldMap(): Promise<void> {
+  private loadWorldMap(mapName: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const imageObj = new Image();
-      imageObj.src = worldMapImageSrc;
+      if(mapName == "worldMap"){
+        imageObj.src = worldMapImageSrc;
+      }
+      else if(mapName == "nAmericaMap"){
+        imageObj.src = nAmericaMapSrc;
+      }
+      else if(mapName == "sAmericaMap"){
+        imageObj.src = sAmericaMapSrc;
+      }
+      else if(mapName == "africaMap"){
+        // console.log("Africa map clicked");
+        imageObj.src = africaMapSrc;
+      }
+      else if(mapName == "europeMap"){
+        imageObj.src = europeMapSrc;
+      }
+      else if(mapName == "australiaMap"){
+        imageObj.src = australiaMapSrc;
+      }
+      else if(mapName == "asiaMap"){
+        imageObj.src = asiaMapSrc;
+      }
 
       imageObj.onload = () => {
         const worldMap = new Konva.Image({
@@ -56,6 +295,7 @@ export class MapView {
         });
 
         this.layer.add(worldMap);
+        this.layer.add(this.addButtons());
         this.renderDaysTraveledText();
         this.layer.draw();
         resolve();
@@ -73,14 +313,22 @@ export class MapView {
     const text = new Konva.Text({
       x: this.stage.width() - 250,
       y: 20,
-      text: `Days Traveled: ${this.model.daysTraveled}`,
+      text: `Days Traveled: ${this.model._daysTraveled}`,
       fontSize: 20,
       fontFamily: "Arial",
       fill: "black",
       name: "daysTraveledText",
     });
-
+    const textBack = new Konva.Rect({
+      x: this.stage.width() - 250,
+      y: 20,
+      width: text.width(),
+      height: 40,
+      fill: "white",
+    });
+    this.layer.add(textBack);
     this.layer.add(text);
+    textBack.moveToTop();
     text.moveToTop();
   }
 
@@ -106,7 +354,7 @@ export class MapView {
       y: y,
       name: "marker",
     });
-
+    console.log(x + ", " + y);
     const line1 = new Konva.Line({
       points: [-10, -10, 10, 10],
       stroke: "red",
@@ -135,9 +383,10 @@ export class MapView {
     });
 
     const messageText = `You clicked on the correct city! This postcard of ${this.model.hint} belongs to: ${this.model.city}, ${this.model.country}!`;
-    
     const { background, text, buttonBackground, buttonText } = this.createMessageBox(messageText);
-
+    this.model._daysTraveled += this.days;
+    console.log("Days Traveled: " + this.model._daysTraveled);
+    this.renderDaysTraveledText();
     messageGroup.add(background);
     messageGroup.add(text);
     messageGroup.add(buttonBackground);
@@ -150,7 +399,7 @@ export class MapView {
     const messageGroup = new Konva.Group({
       name: "messageBox",
     });
-
+    this.days++;
     const messageText = `Oh no! Your next location is ${this.model.hint}. Good luck!`;
     
     const { background, text, buttonBackground, buttonText } = this.createMessageBox(messageText);

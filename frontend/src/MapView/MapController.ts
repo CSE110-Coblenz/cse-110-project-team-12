@@ -3,16 +3,22 @@
 import Konva from "konva";
 import { MapModel } from "./MapModel";
 import { MapView } from "./MapView";
+import correctBuzzer from "../public/correct_buzzer.mp3";
+import wrongBuzzer from "../public/wrong_buzzer.mp3";
 
 // Controller class to handle user interactions
 export class MapController {
   private model: MapModel;
   private view: MapView;
+  public correctBuzzer: HTMLAudioElement;
+  public wrongBuzzer: HTMLAudioElement;
 
   constructor(model: MapModel, view: MapView) {
     this.model = model;
     this.view = view;
     this.initEventHandlers();
+    this.correctBuzzer = new Audio(correctBuzzer);
+    this.wrongBuzzer = new Audio(wrongBuzzer);
   }
 
   // Initialize all event handlers
@@ -93,8 +99,12 @@ export class MapController {
 
     // Show appropriate message
     if (wasCorrect) {
+      this.correctBuzzer.play();
+		  this.correctBuzzer.currentTime = 0;
       this.showSuccessMessage();
     } else {
+      this.wrongBuzzer.play();
+      this.wrongBuzzer.currentTime = 0;
       this.showIncorrectMessage();
     }
 
