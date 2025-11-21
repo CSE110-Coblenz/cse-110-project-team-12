@@ -97,15 +97,6 @@ export class MapController {
     const distance = Math.sqrt(
       Math.pow(originalClick.x - target.x, 2) + Math.pow(originalClick.y - target.y, 2)
     );
-    console.log("=== CLICK DEBUG ===");
-    console.log("Click coordinates (displayed):", clickX, clickY);
-    console.log("Click coordinates (original):", originalClick.x, originalClick.y);
-    console.log("Target location (original):", target.x, target.y);
-    console.log("Distance:", distance.toFixed(2), "Tolerance:", this.model.clickTolerance);
-    console.log("Was correct:", wasCorrect);
-    console.log("Current location:", this.model.city);
-    console.log("\n💡 To update coordinates in JSON:");
-    console.log(`"worldMap": { "x": ${originalClick.x}, "y": ${originalClick.y}, "tolerance": 30 }`);
 
     // Store the clicked location in model (using original coordinates)
     this.model.addClickedLocation({
@@ -159,45 +150,26 @@ export class MapController {
     this.view.removeMessageBoxes();
     this.model.messageBoxVisible = false;
 
-    // If it was a correct guess, advance to next location
     if (wasCorrectGuess) {
-      // Notify listener about the found location BEFORE advancing (so we can show postcard for CURRENT location)
       if (this.onLocationFound) {
         const currentLocation = this.model.getCurrentLocationData();
         if (currentLocation) {
           this.onLocationFound(currentLocation);
-          // We might want to pause here? 
-          // The postcard will take over.
-          // But if we return here, we don't advance?
-          // The user wants "Postcard -> Flag Game -> Next Location".
-          // So we should probably NOT advance yet?
-          // Or advance but don't show it yet?
-
-          // If I call onLocationFound, the GameManager switches to Postcard.
-          // The MapView is destroyed (or hidden).
-          // When we come back to Map, we want to be at the NEXT location.
-          // So we SHOULD advance here.
         }
       }
 
       const hasMoreLocations = this.model.advanceToNextLocation();
 
-      // Update the hint display with the new location
       this.view.updateHint();
-
-      // Update target location marker for the new location
       this.view.hideTargetLocation();
       this.view.showTargetLocation();
 
-      // If we have clicked locations, show travel path
       if (this.model.hasClickedLocations()) {
         this.showTravelPath();
       } else if (hasMoreLocations) {
-        // Update the view to show the new hint/location
         this.view.draw();
       } else {
-        // Game complete!
-        console.log("Game complete! All locations found!");
+        console.log("Game complete!");
         this.view.draw();
       }
     } else {

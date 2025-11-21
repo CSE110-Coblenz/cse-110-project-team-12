@@ -19,7 +19,6 @@ export class FlagGameController {
             ...config
         };
 
-        // Create overlay and modal
         this.overlay = this.createOverlay();
         this.modalContainer = this.createModal();
 
@@ -45,7 +44,6 @@ export class FlagGameController {
         overlay.style.alignItems = 'center';
         overlay.style.zIndex = '9999';
 
-        // Close on overlay click
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
                 this.destroy();
@@ -63,7 +61,6 @@ export class FlagGameController {
         modal.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3)';
         modal.style.position = 'relative';
 
-        // Add close button
         const closeBtn = document.createElement('button');
         closeBtn.innerHTML = '×';
         closeBtn.style.position = 'absolute';
@@ -94,14 +91,11 @@ export class FlagGameController {
     }
 
     start(): void {
-        // Add to DOM
         document.body.appendChild(this.overlay);
         this.overlay.appendChild(this.modalContainer);
 
-        // Show overlay
         this.overlay.style.display = 'flex';
 
-        // Start game
         this.model.reset();
         this.gameState = 'playing';
         this.startNewRound();
@@ -126,7 +120,6 @@ export class FlagGameController {
 
         this.render();
 
-        // Auto-advance after 2 seconds
         this.autoAdvanceTimeout = window.setTimeout(() => {
             this.startNewRound();
         }, 2000);
@@ -157,7 +150,6 @@ export class FlagGameController {
             this.model.getTotalRounds()
         );
 
-        // Auto-close after 4 seconds
         setTimeout(() => {
             this.destroy();
             if (this.onFinish) {
@@ -172,7 +164,6 @@ export class FlagGameController {
         }
         this.view.destroy();
 
-        // Remove from DOM
         if (this.overlay.parentNode) {
             this.overlay.parentNode.removeChild(this.overlay);
         }

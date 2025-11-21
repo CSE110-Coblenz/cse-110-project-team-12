@@ -1,5 +1,4 @@
 import Konva from "konva";
-//import * as fs from 'fs'; // For Node.js
 import ruleData from "../Data/rules.json";
 import storyData from '../Data/story.json';
 import { IntroScreenModel } from "./IntroScreenModel";
@@ -34,7 +33,6 @@ export class IntroScreenController {
             this.view.displayPage(this.model.getState(), this.rules, this.handleNextClick);
         }
         else if (this.model.getState() == 2) {
-            // End of intro
             if (this.onComplete) {
                 this.onComplete();
             }
@@ -52,6 +50,5 @@ export class IntroScreenController {
     }
 
     destroy() {
-        // Cleanup if needed
     }
 }
