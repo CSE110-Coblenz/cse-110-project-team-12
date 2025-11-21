@@ -144,6 +144,12 @@ export class FlagGameController {
         );
     }
 
+    private onFinish: (() => void) | null = null;
+
+    setOnFinish(callback: () => void) {
+        this.onFinish = callback;
+    }
+
     private finishGame(): void {
         this.gameState = 'finished';
         this.view.showFinishScreen(
@@ -154,6 +160,9 @@ export class FlagGameController {
         // Auto-close after 4 seconds
         setTimeout(() => {
             this.destroy();
+            if (this.onFinish) {
+                this.onFinish();
+            }
         }, 4000);
     }
 

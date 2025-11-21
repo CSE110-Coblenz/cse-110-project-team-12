@@ -60,11 +60,11 @@ export class MapController {
   private hideTravelPath(): void {
     this.model.showingTravelPath = false;
     // Remove travel path elements
-    const travelPathElements = this.view.getLayer().find((node: Konva.Node) => 
+    const travelPathElements = this.view.getLayer().find((node: Konva.Node) =>
       node.name() === "travelPath" || node.name() === "travelPathContinueButton"
     );
     travelPathElements.forEach((node) => node.destroy());
-    
+
     // Show target location marker for the new location
     this.view.showTargetLocation();
     this.view.draw();
@@ -88,10 +88,10 @@ export class MapController {
   private handleMapClick(clickX: number, clickY: number): void {
     // Convert click coordinates from displayed space to original image space
     const originalClick = this.view.unscaleCoordinates({ x: clickX, y: clickY });
-    
+
     // Check if click is correct (using original image coordinates)
     const wasCorrect = this.model.isClickCorrect(originalClick.x, originalClick.y);
-    
+
     // Debug: Log click coordinates and target location
     const target = this.model.correctLocation;
     const distance = Math.sqrt(
@@ -148,6 +148,12 @@ export class MapController {
     this.model.messageBoxVisible = true;
   }
 
+  private onLocationFound: ((locationData: any) => void) | null = null;
+
+  setOnLocationFound(callback: (locationData: any) => void) {
+    this.onLocationFound = callback;
+  }
+
   // Dismiss message box
   private dismissMessageBox(wasCorrectGuess: boolean): void {
     this.view.removeMessageBoxes();
@@ -155,15 +161,34 @@ export class MapController {
 
     // If it was a correct guess, advance to next location
     if (wasCorrectGuess) {
+      // Notify listener about the found location BEFORE advancing (so we can show postcard for CURRENT location)
+      if (this.onLocationFound) {
+        const currentLocation = this.model.getCurrentLocationData();
+        if (currentLocation) {
+          this.onLocationFound(currentLocation);
+          // We might want to pause here? 
+          // The postcard will take over.
+          // But if we return here, we don't advance?
+          // The user wants "Postcard -> Flag Game -> Next Location".
+          // So we should probably NOT advance yet?
+          // Or advance but don't show it yet?
+
+          // If I call onLocationFound, the GameManager switches to Postcard.
+          // The MapView is destroyed (or hidden).
+          // When we come back to Map, we want to be at the NEXT location.
+          // So we SHOULD advance here.
+        }
+      }
+
       const hasMoreLocations = this.model.advanceToNextLocation();
-      
+
       // Update the hint display with the new location
       this.view.updateHint();
-      
+
       // Update target location marker for the new location
       this.view.hideTargetLocation();
       this.view.showTargetLocation();
-      
+
       // If we have clicked locations, show travel path
       if (this.model.hasClickedLocations()) {
         this.showTravelPath();
