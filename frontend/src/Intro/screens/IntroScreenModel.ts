@@ -1,4 +1,4 @@
-export default class IntroScreenModel {
+export class IntroScreenModel {
     private state: number;
 
     constructor() {

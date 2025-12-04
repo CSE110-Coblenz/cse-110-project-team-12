@@ -1,4 +1,4 @@
-import type { Location } from "../domain/location";
+// import type { Location } from "../domain/location";
 
 export const MOCK_LOCATIONS = [
   {

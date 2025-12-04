@@ -1,7 +1,7 @@
 import Konva from "konva";
 import ruleData from "../Data/rules.json";
 import storyData from '../Data/story.json';
-import IntroScreenModel from "./IntroScreenModel";
+import {IntroScreenModel} from "./IntroScreenModel";
 import { IntroScreenView } from "./IntroScreenView";
 
 export class IntroScreenController {
@@ -21,7 +21,7 @@ export class IntroScreenController {
     }
 
     setOnComplete(callback: () => void) {
-        this.onComplete = callback;
+        this.onFinish = callback;
     }
 
     private handleNextClick = () => {
@@ -33,12 +33,7 @@ export class IntroScreenController {
             this.model.setState(2);
             this.view.displayPage(this.model.getState(), this.rules, this.handleNextClick);
         }
-        else if (this.model.getState() == 2) {
-            if (this.onComplete) {
-                this.onComplete();
-            }
-        }
-        else if(this.model.getState() == 2){
+        else{
             // Intro finished; notify coordinator
             if (this.onFinish) this.onFinish();
         }
